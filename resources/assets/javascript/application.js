@@ -1,0 +1,1 @@
+var application = angular.module('application', ['ngRoute', 'ngResource', 'ngAnimate', 'ngSanitize', 'ngCookies', 'ui.bootstrap', 'ui.mask', 'angular-loading-bar', 'flash', 'pascalprecht.translate']);

@@ -1,0 +1,83 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        table {
+            font-size: 11pt;
+            width: 100%;
+            display:table;
+            border-collapse: collapse;
+        }
+        tr {
+            display:table-row;
+            border: 1px solid Black;
+            page-break-inside: avoid;
+        }
+        th{
+            border: 1px solid Black;
+            display:table-cell;
+            background-color: #ccc;
+        }
+        td{
+            border: 1px solid Black;
+            display:table-cell;
+            text-align: center;
+        }
+    </style>
+</head>>
+
+<body>
+    <?php if($opcoes['id_formato'] == 1): ?>
+        <h4>MINISTÉRIO DA INTEGRAÇÃO NACIONAL</h4>
+        <p>CONTRATO RG Nº <?php echo e($contrato->strnumero); ?> </p>
+        <p>Vigência: <?php echo e($vigencia['inicio']); ?> a <?php echo e($vigencia['fim']); ?></p>
+
+        <h4>3.1 - RELATÓRIO CONSOLIDADO DAS EXTRAÇÕES DE DADOS SIAFI OPERACIONAL</h4>
+        <p>Período de Faturamento: <?php echo e(mb_strtoupper($opcoes['mes_relativo']['month']['desc'])); ?>/<?php echo e($opcoes['mes_relativo']['year']); ?></p>
+        <br />
+    <?php endif; ?>
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2">REGISTROS EXTRAÍDOS = D-1</th>
+                <th colspan="<?php echo e(count($repository['extracoes'])); ?>">ROTINA DE EXTRAÇÃO DE ARQUIVOS SIAFI OPERACIONAL</th>
+                <th>TOTAIS</th>
+            </tr>
+            <tr>
+                <th rowspan="2">DATA RECEBIMENTO DO ARQUIVO</th>
+                <th rowspan="2">DATA MOVIMENTO DO ARQUIVO</th>
+                <?php foreach($repository['extracoes'] as $extracao): ?>
+                    <th><?php echo e($extracao); ?></th>
+                <?php endforeach; ?>
+                <th rowspan="2">GRAVADOS</th>
+            </tr>
+            <tr>
+                <th>GRAVADOS</th>
+                <th>GRAVADOS</th>
+                <th>GRAVADOS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($repository['data'] as $periodo => $valores): ?>
+                <?php foreach($valores['data'] as $timestamp => $valor): ?>
+                <tr>
+                    <td><?php echo e(\Date::createFromTimestamp($valor['recebido'])->format('d/m/Y')); ?></td>
+                    <td><?php echo e(\Date::createFromTimestamp($valor['movimento'])->format('d/m/Y')); ?></td>
+                    <?php foreach($valor['linhas'] as $linhas): ?>
+                        <td><?php echo e(Format::number($linhas, 2)); ?></td>
+                    <?php endforeach; ?>
+                    <td><?php echo e(Format::number(array_sum($valor['linhas']), 2)); ?></td>
+                </tr>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+            <tr>
+                <th colspan="2">TOTAL DE REGISTROS</th>
+                <?php foreach($repository['total']['extracao'] as $extracao): ?>
+                    <td><?php echo e(Format::number($extracao, 2)); ?></td>
+                <?php endforeach; ?>
+                <td><?php echo e(Format::number(array_sum($repository['total']['extracao']), 2)); ?></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

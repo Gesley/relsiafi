@@ -1,0 +1,75 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        table {
+            font-size: 11pt;
+            width: 100%;
+            display:table;
+            border-collapse: collapse;
+        }
+        tr {
+            display:table-row;
+            border: 1px solid Black;
+            page-break-inside: avoid;
+        }
+        th{
+            border: 1px solid Black;
+            display:table-cell;
+            background-color: #ccc;
+        }
+        td{
+            border: 1px solid Black;
+            display:table-cell;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <?php if($opcoes['id_formato'] == 1): ?>
+        <h4>MINISTÉRIO DA INTEGRAÇÃO NACIONAL</h4>
+        <p>CONTRATO RG Nº <?php echo e($contrato->strnumero); ?> </p>
+        <p>Vigência: <?php echo e($vigencia['inicio']); ?> a <?php echo e($vigencia['fim']); ?></p>
+
+        <h4>3 - RELATÓRIO CONSOLIDADO DAS EXTRAÇÕES DE DADOS SIAFI OPERACIONAL</h4>
+        <p>Período de Faturamento: <?php echo e(mb_strtoupper($opcoes['mes_relativo']['month']['desc'])); ?>/<?php echo e($opcoes['mes_relativo']['year']); ?><?php ; ?></p>
+        <br />
+    <?php endif; ?>
+    <table>
+        <thead>
+            <tr>
+                <th colspan="<?php echo e(count($repository['date']) + 2); ?>">RELATÓRIO CONSOLIDADO DAS EXTRAÇÕES DE DADOS SIAFI OPERACIONAL</th>
+            </tr>
+            <tr>
+                <th>ARQUIVO EXTRAÍDO</th>
+                <?php foreach($repository['date'] as $chave => $valor): ?>
+                <th><?php echo e($valor['mescurto_ano']); ?></th>
+                <?php endforeach; ?>
+                <th>Total de Registros</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($repository['data'] as $chave => $valor): ?>
+                <tr>
+                    <td><?php echo e($valor['extracao']); ?></td>
+
+                    <?php foreach($valor['data'] as $valores): ?>
+                        <td><?php echo e(Format::number($valores['milheiros'], 2)); ?></td>
+                    <?php endforeach; ?>
+
+                    <td><?php echo e(Format::number($valor['total']['geral'],2)); ?></td>
+                </tr>
+            <?php endforeach; ?>
+            <tr>
+                <td colspan="<?php echo e(count($repository['date']) + 1); ?>">TOTAL DE MILHEIROS DE REGISTROS EXTRAÍDOS - CARGA DIÁRIA</td>
+                <td><?php echo e(Format::number($repository['total']['geral'], 2)); ?></td>
+            </tr>
+            <tr>
+                <td colspan="<?php echo e(count($repository['date']) + 1); ?>">TOTAL GERAL DE MILHEIROS DE REGISTROS EXTRAÍDOS</td>
+                <td><?php echo e(Format::number($repository['total']['milheiros'], 2)); ?></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

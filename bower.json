@@ -1,0 +1,20 @@
+{
+  "name": "RELSIAFI",
+  "dependencies": {
+    "angular-animate": "latest",
+    "angular-bootstrap": "latest",
+    "angular-cookies": "latest",
+    "angular-flash-alert": "latest",
+    "angular-i18n": "latest",
+    "angular-loading-bar": "latest",
+    "angular-resource": "latest",
+    "angular-route": "latest",
+    "angular-sanitize": "latest",
+    "angular-translate": "latest",
+    "angular-translate-loader-static-files": "latest",
+    "angular-translate-storage-local": "latest",
+    "angular-ui-mask": "latest",
+    "bootswatch-dist": "simplex",
+    "fontawesome": "latest"
+  }
+}

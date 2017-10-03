@@ -1,0 +1,71 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        table {
+            font-size: 11pt;
+            width: 100%;
+            display:table;
+            border-collapse: collapse;
+        }
+        tr {
+            display:table-row;
+            border: 1px solid Black;
+            page-break-inside: avoid;
+        }
+        th{
+            border: 1px solid Black;
+            display:table-cell;
+            background-color: #ccc;
+        }
+        td{
+            border: 1px solid Black;
+            display:table-cell;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <?php if($opcoes['id_formato'] == 1): ?>
+        <h4>MINISTÉRIO DA INTEGRAÇÃO NACIONAL</h4>
+        <p>CONTRATO RG Nº <?php echo e($contrato->strnumero); ?> </p>
+        <p>Vigência: <?php echo e($vigencia['inicio']); ?> a <?php echo e($vigencia['fim']); ?></p>
+
+        <h4>4 - RELATÓRIO DEMOSTRATIVO DE FATURAMENTO - MINISTÉRIO DA INTEGRAÇÃO NACIONAL</h4>
+        <br />
+    <?php endif; ?>
+    <table width="100%">
+        <thead>
+            <tr>
+                <th colspan="16">DEMOSTRATIVO DE FATURAMENTO - MINISTÉRIO DA INTEGRAÇÃO NACIONAL</th>
+            </tr>
+            <tr>
+                <th>CONTRATO</th>
+                <th>ANO</th>
+                <?php foreach($repository['date'] as $data): ?>
+                <th><?php echo e($data['mescurto']); ?></th>
+                <?php endforeach; ?>
+                <th>TOTAL</th>
+                <th>Valor Executado do Contrato</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><?php echo e($contrato->strnumero); ?></td>
+                <td>2015</td>
+                <?php foreach($repository['data'] as $valor): ?>
+                <td><?php echo e(Format::number($valor['linhas'], 2)); ?></td>
+                <?php endforeach; ?>
+                <td><?php echo e(Format::number($repository['total']['ano'], 2)); ?></td>
+                <td><?php echo e(Format::number($repository['total']['ano'],2)); ?></td>
+            </tr>
+
+            <tr>
+                <td colspan="15">TOTAL GERAL FATURADO CONTRATO <?php echo e($contrato->strnumero); ?></td>
+                <td><?php echo e(Format::number($repository['total']['ano'], 2)); ?></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
